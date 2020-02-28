@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar">&nbsp;</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-9">
+            <form autocomplete="off" action="#" th:action="@{/activities}"
+                  th:object="${selectDateDto}" method="post" class="form-inline"
+                  role="form">
+                <h2>Select date to see users activity</h2>
+                <div class="form-group mx-sm-3 mb-2">
+                    <label th:if="${#fields.hasErrors('date')}" th:errors="*{date}"
+                           class="validation-message"></label>
+                    <input type="date" th:field="*{date}" placeholder="Date"
+                           class="form-control"/>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Show activity</button>
+
+            </form>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User Email</th>
+                    <th scope="col">Activity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="activity : ${activities}">
+                    <th scope="row" th:text="${activity.id}"/>
+                    <td th:text="${activity.user.email}"/>
+                    <td th:text="${activity.description}"/>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
